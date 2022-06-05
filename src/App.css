@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+@import '~antd/dist/antd.css';
+
+*{
+  position: relative;
+  box-sizing: border-box;
+  font-family: 'Kanit', sans-serif;
+}
+
+@media only screen and (max-width: 100%) {
+body{
+  background-color: #f7f7f7;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 30px;
+}
+}
+  .container{
+  margin: 20px auto;
+  height: auto;
+  background-color: rgb(151, 65, 237);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

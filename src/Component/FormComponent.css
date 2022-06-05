@@ -1,0 +1,48 @@
+label{
+    display: inline-block;
+    margin: 10px;
+}
+h1.insert{
+    text-align: center;
+}
+div.prename{
+    display: inline;
+}
+input{
+    margin: 0 5px;
+    border: 1px solid #5e5c5c5d;
+    border-radius: 2px;
+}
+input:focus{
+    outline: none;
+}
+.btn-sub{
+    background-color: rgb(27, 216, 84);
+    color: rgb(81, 77, 77);
+    width: 20%;
+    padding: 1px;
+    margin: 10px 30px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+}
+.btn-re{
+    background-color: rgb(238, 13, 13);
+    color: rgb(237, 232, 232);
+    width: 20%;
+    padding: 1px;
+    margin: 10px 30px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+}
+.form-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.btn-pos{
+    display: flex;
+    justify-content: space-evenly;
+}
