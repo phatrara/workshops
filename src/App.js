@@ -10,6 +10,7 @@ import customStyles from './Component/TablecustomStyles';
 
 
 
+
 const columns = [
   {
       name: 'คำนำหน้า',
@@ -84,7 +85,7 @@ const onAddNewItems_d = (newData) => {
         />
       </div>
       {/* <ReportComponent data ={data}/> */}
-    </div>    
+    </div>
   )
 }
 
