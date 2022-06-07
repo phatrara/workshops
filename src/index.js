@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {  ApolloClient,  InMemoryCache,  ApolloProvider,  useQuery,  gql } from "@apollo/client";
+import CreatePost from './Component/createPosts';
 
 const client = new ApolloClient({
   uri: 'https://api-ap-southeast-2.graphcms.com/v2/cl42fl2no430g01w63m0b5qz2/master',
@@ -22,6 +23,8 @@ const QUERY = gql`
         }
       }
 `;
+
+
   const { loading, error, data } = useQuery(QUERY);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
