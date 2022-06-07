@@ -7,9 +7,59 @@ import ReportComponent from './Component/ReportComponent';
 import DataTable from 'react-data-table-component';
 import {createSelector} from 'reselect'
 import customStyles from './Component/TablecustomStyles';
+import {  ApolloClient,  InMemoryCache,  ApolloProvider,  useQuery,  gql, HttpLink ,from } from "@apollo/client";
+import {onError} from '@apollo/client/link/error';
+import CreatePost from './Component/createPosts';
+import GetUsers from './Component/GetUsers';
+
+
+const errorLink = onError(({ graphqlError, networkError})=>{
+  if (graphqlError){
+    graphqlError.map(({message, location,path})=>{
+      alert(`Graphal error ${message}`);
+    });
+  }
+});
+const link = from([
+  errorLink,
+  new HttpLink({uri:"http://localhost:6969/graphql"}),
+])
+const client = new ApolloClient({
+  link:link,
+  cache: new InMemoryCache()
+});
 
 
 
+function POST_QUERY() {
+  
+const QUERY = gql`
+      {
+        posts{
+          id
+          title
+          body
+        }
+      }
+`;
+
+
+  const { loading, error, data } = useQuery(QUERY);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
+
+  return data.posts.map(({ title, body,id }) => (
+    <div key={id}>
+      <p>
+        {title}: {body}
+      </p>
+    </div>
+  ));
+}
+// client
+//   .query({
+//     query: testQuery
+//   })  .then(result => console.log(result));
 
 const columns = [
   {
@@ -75,6 +125,7 @@ const onAddNewItems_d = (newData) => {
 }
  
   return(
+    <ApolloProvider client={client}>
     <div className='container'>
       {/* <FormComponent onAddItems_d = {onAddNewItems_d}/> */}
       <div>
@@ -86,6 +137,9 @@ const onAddNewItems_d = (newData) => {
       </div>
       {/* <ReportComponent data ={data}/> */}
     </div>
+    {/* <POST_QUERY/> */}
+    <GetUsers/>
+    </ApolloProvider>
   )
 }
 
