@@ -4,8 +4,8 @@ import {LOAD_USERS} from '../GraphQL/Queries'
 
 
 function GetUsers() {
-    const {loading,error,data} = useQuery(LOAD_USERS);
-
+    const data = useQuery(LOAD_USERS);
+    console.log(data);
     useEffect(()=>{
         console.log(data)
     },[data])

@@ -16,7 +16,7 @@ import GetUsers from './Component/GetUsers';
 const errorLink = onError(({ graphqlError, networkError})=>{
   if (graphqlError){
     graphqlError.map(({message, location,path})=>{
-      alert(`Graphal error ${message}`);
+      alert(`Graphql error ${message}`);
     });
   }
 });

@@ -10,8 +10,8 @@ const UserType = new GraphQLObjectType({
         first_name:{type:GraphQLString},
         last_name:{type:GraphQLString},
         Address:{type:GraphQLString},
-        ID_card_number:{type:GraphQLInt},
-        Phone_Number:{type:GraphQLInt},
+        ID_card_number:{type:GraphQLString},
+        Phone_Number:{type:GraphQLString},
         Note:{type:GraphQLString},
 
     }),
