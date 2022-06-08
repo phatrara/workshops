@@ -1,6 +1,8 @@
 import './FormComponent.css';
 import {useEffect, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { CREATE_USER_MUTATION } from '../GraphQL/Mutation';
+import { useMutation } from '@apollo/client';
 
 
 const FormComponent =(props)=>{
@@ -13,22 +15,19 @@ const FormComponent =(props)=>{
     const [sex,setSex] = useState('เด็กชาย');
     const [formValid,setFormValid] = useState(false);
     // const fullName = sex+firstName+lastName
-
+    const [createUser,{error}] = useMutation(CREATE_USER_MUTATION);
 
     const handleNameChange = (event)=>{
         setFirstName(event.target.value);
-        // console.log(firstName);
     }
     const handleLNameChange =(event)=>{
         setLastName(event.target.value);
     }
     const handleNumberIdChange =(event)=>{
         setNumberId(event.target.value.replace(/\D/g, ''));
-        // console.log(numberId);
     }
     const handlePhoneChange =(event)=>{
         setPhone(event.target.value.replace(/\D/g, ''));
-        console.log(phone);
     }
     const handleNoteChange =(event)=>{
         setNote(event.target.value);
@@ -41,18 +40,42 @@ const FormComponent =(props)=>{
     }
     const saveData = (event)=>{
         event.preventDefault();
+            createUser({
+                variables:{
+                    Gender:sex,
+                    first_name:firstName,
+                    last_name:lastName,
+                    Address:address,
+                    ID_card_number:numberId,
+                    Phone_Number:phone,
+                    Note:note
+                }
+                
+            })
+            if (error){
+                console.log(error);
+            }
+            props.onAddItems_d(Data)
+            setFirstName('')
+            setLastName('')
+            setAddress('')
+            setNumberId('')
+            setNote('')
+            setPhone('')
+            setSex('เด็กชาย')
+            setFormValid(false)
         const Data = {
-            id:uuidv4(),
-            sex:sex,
-            firstName:firstName,
-            lastName:lastName,
-            numberId:numberId,
-            phone:phone,
-            address:address,
-            note:note,
+            
+            // id:uuidv4(),
+            // sex:sex,
+            // firstName:firstName,
+            // lastName:lastName,
+            // numberId:numberId,
+            // phone:phone,
+            // address:address,
+            // note:note,
             // fullName:fullName
         }
-        console.log(Data);
         props.onAddItems_d(Data)
         setFirstName('')
         setLastName('')
@@ -60,6 +83,7 @@ const FormComponent =(props)=>{
         setNumberId('')
         setNote('')
         setPhone('')
+        setSex('เด็กชาย')
         setFormValid(false)
     }
 
@@ -74,7 +98,7 @@ const FormComponent =(props)=>{
             setFormValid(true);
         }                    
     },[firstName,lastName,numberId,phone,address,note])
-
+    
     return(
         <div className='form-content'>
             <div className='form-control'>
