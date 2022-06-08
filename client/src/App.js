@@ -1,16 +1,19 @@
 import './App.css';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import FormComponent from './Component/FormComponent';
 // import Item_d from './Component/item';
-import { useState } from 'react';
-import ReportComponent from './Component/ReportComponent';
-import DataTable from 'react-data-table-component';
-import {createSelector} from 'reselect'
-import customStyles from './Component/TablecustomStyles';
+// import { useState } from 'react';
+// import ReportComponent from './Component/ReportComponent';
+// import DataTable from 'react-data-table-component';
+// import {createSelector} from 'reselect'
+// import customStyles from './Component/TablecustomStyles';
 import {  ApolloClient,  InMemoryCache,  ApolloProvider,  useQuery,  gql, HttpLink ,from } from "@apollo/client";
 import {onError} from '@apollo/client/link/error';
-import CreatePost from './Component/createPosts';
+// import CreatePost from './Component/createPosts';
 import GetUsers from './Component/GetUsers';
+import { Button } from 'antd';
+import {Route,Routes,Link,BrowserRouter} from 'react-router-dom';
+
 
 
 const errorLink = onError(({ graphqlError, networkError})=>{
@@ -128,10 +131,15 @@ function App() {
  
   return(
     <ApolloProvider client={client}>
+      <BrowserRouter>
+      <div className='btn-test'>
+        <Button  className='btn-main' type='submit' href='/insert'>ลงทะเบียน</Button>
+        <Button  className='btn-sec' type='submit' href='/Data'>ข้อมูลนักเรียน</Button>
+      </div>
     <div className='container'>
-      <FormComponent 
+      {/* <FormComponent 
       // onAddItems_d = {onAddNewItems_d}
-      />
+      /> */}
       <div>
       {/* <DataTable
             columns={columns}
@@ -142,7 +150,13 @@ function App() {
       {/* <ReportComponent data ={data}/> */}
     </div>
     {/* <POST_QUERY/> */}
-    <GetUsers/>
+    <Routes>
+      {/* <Route path='/' element={App}></Route> */}
+      <Route path='/insert' element={<FormComponent/>}></Route>
+      <Route path='/Data' element={<GetUsers/>}></Route>
+    </Routes>
+    {/* <GetUsers/> */}
+    </BrowserRouter>
     </ApolloProvider>
   )
 }

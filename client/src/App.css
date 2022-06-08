@@ -27,3 +27,19 @@ body{
   justify-content: center;
   align-items: center;
 }
+.btn-test{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  
+}
+.btn-main{
+  margin-right:10px ;
+  background-color: aqua;
+  color: black;
+}
+.btn-sec{
+  margin-left: 10px;
+  background-color: burlywood;
+  color: black;
+}
