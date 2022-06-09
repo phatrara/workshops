@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { CREATE_USER_MUTATION } from '../GraphQL/Mutation';
 import { useMutation } from '@apollo/client';
+import { Button, Form, Input, InputNumber } from 'antd';
 
 
 const FormComponent =(props)=>{
@@ -101,21 +102,63 @@ const FormComponent =(props)=>{
             setFormValid(true);
         }                    
     },[firstName,lastName,numberId,phone,address,note])
+    const layout = {
+        labelCol: {
+          span: 8,
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      };
+      /* eslint-disable no-template-curly-in-string */
+      
+      const validateMessages = {
+        required: '${label} is required!',
+        types: {
+          email: '${label} is not a valid email!',
+          number: '${label} is not a valid number!',
+        },
+        number: {
+          range: '${label} มี 10 หลัก',
+        },
+      };
+      /* eslint-enable no-template-curly-in-string */
+      
+     
+        const onFinish = (values) => {
+          console.log(values);
+        };
     
     return(
+        
         <div className='form-content'>
             <div className='form-control'>
                     <h1 className='insert'>ลงทะเบียนนักเรียน</h1>
                 </div>
-            <form onSubmit={saveData}>
+                <div className='Form-ant'>
+                <Form  onFinish={onFinish}  validateMessages={validateMessages} {...layout}>
+                    <Form.Item label='FirstName'>
+                       <Input placeholder="FirstName"  />
+                    </Form.Item>
+                    <Form.Item label='LastName'>
+                        <Input placeholder='LastName'/>
+                    </Form.Item>
+                    <Form.Item>
+                        <Input placeholder='ที่อยู่'/>
+                    </Form.Item>
+                    
+                </Form>
+                </div>
+            
+            {/* <form onSubmit={saveData}>
                 
                 <div className='prename'>
                     <label>คำนำหน้า : </label>
                     <select id="prename" value={sex} onChange={handlesexBoyChange}>
                         <option value="เด็กชาย">เด็กชาย</option>
                         <option value="เด็กหญิง">เด็กหญิง</option>
-                        {/* <option value="นาย">นาย</option>
-                        <option value="นางสาว">นางสาว</option> */}
+                        <option value="นาย">นาย</option>
+                        <option value="นางสาว">นางสาว</option>
                     </select>
                     <input type="text" placeholder="ชื่อจริง" id="first_name" name="first_name" value={firstName} onChange={handleNameChange}></input>
                     <input type="text" placeholder="นามสกุล" id="last_name" name="last_name" value={lastName} onChange={handleLNameChange}></input>
@@ -140,8 +183,8 @@ const FormComponent =(props)=>{
                     <button type="submit" className="btn-sub" disabled={!formValid}>บันทึก</button>
                     <button type="reset" className="btn-re">ยกเลิก</button>
                 </div>
-            </form>
+            </form> */}
         </div>
-    )
- }
+    );
+ };
 export default FormComponent;

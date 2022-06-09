@@ -19,7 +19,7 @@ import {Route,Routes,BrowserRouter} from 'react-router-dom';
 const errorLink = onError(({ graphqlError, networkError})=>{
   if (graphqlError){
     graphqlError.map(({message, location,path})=>{
-      alert(`Graphql error ${message}`);
+      alert(`Graphql error ${message} , location error at ${location},  path error at ${path} `);
     });
   }
 });
@@ -140,21 +140,21 @@ function App() {
       {/* <FormComponent 
       // onAddItems_d = {onAddNewItems_d}
       /> */}
-      <div>
+     
       {/* <DataTable
             columns={columns}
             // data={data}
             customStyles={customStyles}
         /> */}
-      </div>
+      
       {/* <ReportComponent data ={data}/> */}
-    </div>
+    
     {/* <POST_QUERY/> */}
     <Routes>
       {/* <Route path='/' element={App}></Route> */}
       <Route path='/insert' element={<FormComponent/>}></Route>
       <Route path='/Data' element={<GetUsers/>}></Route>
-    </Routes>
+    </Routes></div>
     {/* <GetUsers/> */}
     </BrowserRouter>
     </ApolloProvider>

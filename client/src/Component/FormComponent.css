@@ -41,6 +41,34 @@ input:focus{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: blue;
+    width: 80%;
+}
+.Form-ant{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    background-color: aqua;
+}
+Form{
+    width: 50%;
+}
+Form.Item{
+    display: inline-block;
+}
+.ant-input{
+    display: inline;
+    justify-content: center;
+    width: 80%;
+}
+.ant-form-item{
+    background-color: antiquewhite;
+}
+.ant-form {
+    width: 100%;
+    display: block;
 }
 .btn-pos{
     display: flex;

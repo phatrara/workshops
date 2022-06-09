@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {useQuery,gql} from '@apollo/client';
 import {LOAD_USERS} from '../GraphQL/Queries'
-import DataTable from "react-data-table-component";
 import customStyles from "./TablecustomStyles";
-import { Space, Table } from 'antd';
+import { Space, Table} from 'antd';
+import {EditOutlined,DeleteFilled} from '@ant-design/icons'
 
 function GetUsers() {
     
@@ -47,10 +47,12 @@ function GetUsers() {
           title: 'Action',
           key: 'action',
           render: (_, record) => (
+            <>
             <Space size="middle">
-              <a>Invite {record.name}</a>
-              <a>Delete</a>
-            </Space>
+              <a>Edit<EditOutlined /> {record.name}</a>
+              <a>Delete<DeleteFilled /></a>
+              
+            </Space></>
           ),
         },
       ];
@@ -63,7 +65,6 @@ function GetUsers() {
         if (data) {
         setUsers(data.getAllUsers)
         console.log(data.getAllUsers);
-
         }
     },[data])
     const Appt = () => <Table customStyles={customStyles} columns={columns} dataSource={users}/>;
