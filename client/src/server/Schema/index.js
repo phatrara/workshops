@@ -41,7 +41,8 @@ const Mutation = new GraphQLObjectType({
                     Address:args.Address,
                     ID_card_number:args.ID_card_number,
                     Phone_Number:args.Phone_Number,
-                    Note:args.Note
+                    Note:args.Note,
+                    Gender:args.Gender
                 })
                 return args
             }

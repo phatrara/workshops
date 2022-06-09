@@ -12,7 +12,7 @@ import {onError} from '@apollo/client/link/error';
 // import CreatePost from './Component/createPosts';
 import GetUsers from './Component/GetUsers';
 import { Button } from 'antd';
-import {Route,Routes,Link,BrowserRouter} from 'react-router-dom';
+import {Route,Routes,BrowserRouter} from 'react-router-dom';
 
 
 

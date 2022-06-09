@@ -48,14 +48,16 @@ const FormComponent =(props)=>{
                     Address:address,
                     ID_card_number:numberId,
                     Phone_Number:phone,
-                    Note:note
+                    Note:note,
+                    
                 }
                 
             })
             if (error){
                 console.log(error);
             }
-            props.onAddItems_d(Data)
+            console.log(sex);
+            // props.onAddItems_d(Data)
             setFirstName('')
             setLastName('')
             setAddress('')
@@ -64,27 +66,28 @@ const FormComponent =(props)=>{
             setPhone('')
             setSex('เด็กชาย')
             setFormValid(false)
-        const Data = {
+
+        // const Data = {
             
-            // id:uuidv4(),
-            // sex:sex,
-            // firstName:firstName,
-            // lastName:lastName,
-            // numberId:numberId,
-            // phone:phone,
-            // address:address,
-            // note:note,
-            // fullName:fullName
-        }
-        props.onAddItems_d(Data)
-        setFirstName('')
-        setLastName('')
-        setAddress('')
-        setNumberId('')
-        setNote('')
-        setPhone('')
-        setSex('เด็กชาย')
-        setFormValid(false)
+        //     // id:uuidv4(),
+        //     // sex:sex,
+        //     // firstName:firstName,
+        //     // lastName:lastName,
+        //     // numberId:numberId,
+        //     // phone:phone,
+        //     // address:address,
+        //     // note:note,
+        //     // fullName:fullName
+        // }
+        // props.onAddItems_d(Data)
+        // setFirstName('')
+        // setLastName('')
+        // setAddress('')
+        // setNumberId('')
+        // setNote('')
+        // setPhone('')
+        // setSex('เด็กชาย')
+        // setFormValid(false)
     }
 
     useEffect(()=>{
