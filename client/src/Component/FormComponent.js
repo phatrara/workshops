@@ -3,9 +3,10 @@ import {useEffect, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { CREATE_USER_MUTATION } from '../GraphQL/Mutation';
 import { useMutation } from '@apollo/client';
-import { Button, Form, Input, InputNumber } from 'antd';
+import { Button, Form, Input, InputNumber,Select} from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
-
+const { Option } = Select;
 const FormComponent =(props)=>{
     const [firstName,setFirstName] = useState('')
     const [lastName,setLastName] = useState('')
@@ -125,10 +126,36 @@ const FormComponent =(props)=>{
       /* eslint-enable no-template-curly-in-string */
       
      
-        const onFinish = (values) => {
-          console.log(values);
-        };
-    
+    const onFinish = (event)=>{
+            // event.preventDefault();
+            // console.log(firstName,lastName,sex);
+                createUser({
+                    variables:{
+                        Gender:sex,
+                        first_name:firstName,
+                        last_name:lastName,
+                        Address:address,
+                        ID_card_number:numberId,
+                        Phone_Number:phone,
+                        Note:note,
+                        
+                    }
+                    
+                })
+                if (error){
+                    console.log(error);
+                }
+                // props.onAddItems_d(Data)
+                setFirstName('')
+                setLastName('')
+                setAddress('')
+                setNumberId('')
+                setNote('')
+                setPhone('')
+                setSex('เด็กชาย')
+                setFormValid(false)
+        };    
+
     return(
         
         <div className='form-content'>
@@ -137,16 +164,39 @@ const FormComponent =(props)=>{
                 </div>
                 <div className='Form-ant'>
                 <Form  onFinish={onFinish}  validateMessages={validateMessages} {...layout}>
-                    <Form.Item label='FirstName'>
-                       <Input placeholder="FirstName"  />
-                    </Form.Item>
-                    <Form.Item label='LastName'>
-                        <Input placeholder='LastName'/>
-                    </Form.Item>
-                    <Form.Item>
-                        <Input placeholder='ที่อยู่'/>
+                    <Form.Item label='คำนำหน้า'>
+                    <Select
+                    defaultValue={sex}
+                    style={{ width: 120,}}
+                    onChange={handlesexBoyChange}
+                    >
+                    <Option value="เด็กชาย">เด็กชาย</Option>
+                    <Option value="เด็กหญิง">เด็กหญิง</Option>
+                    </Select>
                     </Form.Item>
                     
+                    <Form.Item label='ชื่อจริง'>
+                       <Input placeholder="FirstName" value={firstName} onChange={handleNameChange}/>
+                    </Form.Item>
+                    <Form.Item label='นามสกุล'>
+                        <Input placeholder='LastName'value={lastName} onChange={handleLNameChange}/>
+                    </Form.Item>
+                    <Form.Item label='เลขบัตรประชาชน'>
+                        <Input placeholder='1409901508678'value={numberId} onChange={handleNumberIdChange}/>
+                    </Form.Item>
+                    <Form.Item label='ที่อยู่'>
+                        <Input placeholder='บ้านเลขที่ 23 หมู่ 3'value={address} onChange={handleAddressChange}/>
+                    </Form.Item>
+                    <Form.Item label='เบอร์โทร'>
+                        <Input placeholder='0804696207'value={phone} onChange={handlePhoneChange}/>
+                    </Form.Item>
+                    <Form.Item label='หมายเหตุ'>
+                        <Input.TextArea value={note} onChange={handleNoteChange}/>
+                    </Form.Item>
+                    <div className='btn-pos'>
+                        <Button type="primary" htmlType='submit' className="btn-sub ">ยืนยัน</Button>
+                        <Button type='danger' htmlType='reset' className="btn-re ">ยกเลิก</Button>
+                    </div>
                 </Form>
                 </div>
             

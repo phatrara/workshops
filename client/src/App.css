@@ -21,7 +21,7 @@ body{
   .container{
   margin: 20px auto;
   height: auto;
-  background-color: rgb(151, 65, 237);
+  /* background-color: rgb(151, 65, 237); */
   display: flex;
   flex-direction: column;
   justify-content: center;

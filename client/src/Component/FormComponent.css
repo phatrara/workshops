@@ -21,7 +21,7 @@ input:focus{
     color: rgb(81, 77, 77);
     width: 20%;
     padding: 1px;
-    margin: 10px 30px;
+    margin: 10px 50px;
     cursor: pointer;
     display: inline-block;
     font-size: 16px;
@@ -31,17 +31,19 @@ input:focus{
     color: rgb(237, 232, 232);
     width: 20%;
     padding: 1px;
-    margin: 10px 30px;
+    margin: 10px 50px;
     cursor: pointer;
     display: inline-block;
     font-size: 16px;
+    justify-content: end;
+    
 }
 .form-content{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: blue;
+    /* background-color: blue; */
     width: 80%;
 }
 .Form-ant{
@@ -50,7 +52,7 @@ input:focus{
     justify-content: center;
     align-items: center;
     width: 50%;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 Form{
     width: 50%;
@@ -64,13 +66,15 @@ Form.Item{
     width: 80%;
 }
 .ant-form-item{
-    background-color: antiquewhite;
+    margin: 0;
+    /* background-color: antiquewhite; */
 }
 .ant-form {
     width: 100%;
     display: block;
 }
-.btn-pos{
+.btn-pos {
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
 }
