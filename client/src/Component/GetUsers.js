@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {useQuery,gql} from '@apollo/client';
 import {LOAD_USERS} from '../GraphQL/Queries'
 import customStyles from "./TablecustomStyles";
-import { Space, Table} from 'antd';
+import { Col, Row, Space, Table} from 'antd';
 import {EditOutlined,DeleteFilled} from '@ant-design/icons'
 
 function GetUsers() {
@@ -67,12 +67,21 @@ function GetUsers() {
         console.log(data.getAllUsers);
         }
     },[data])
-    const Appt = () => <Table customStyles={customStyles} columns={columns} dataSource={users}/>;
+    const Getalluser = () => 
+    <Table 
+    columns={columns} 
+    dataSource={users}
+    size='middle'
+    />;
     return (
     
         <div>
+          <Row justify="center"span={16}>
+            <Col span={24}>
+            <Getalluser/>
+            </Col>
+          </Row>
         {/* {users.map((val)=>{ return <h1>{val.first_name}</h1>  })}             */}
-        <Appt/>
         </div>
     )
 }

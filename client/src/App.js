@@ -11,8 +11,10 @@ import {  ApolloClient,  InMemoryCache,  ApolloProvider,  useQuery,  gql, HttpLi
 import {onError} from '@apollo/client/link/error';
 // import CreatePost from './Component/createPosts';
 import GetUsers from './Component/GetUsers';
-import { Button } from 'antd';
-import {Route,Routes,BrowserRouter} from 'react-router-dom';
+import { Affix, Button, Col, Dropdown, Layout, Menu,Row, Space } from 'antd';
+import {Route,Routes,BrowserRouter, Link} from 'react-router-dom';
+import { Content, Footer, Header } from 'antd/lib/layout/layout';
+import { DownOutlined } from '@ant-design/icons';
 
 
 
@@ -128,15 +130,88 @@ function App() {
 //     return [...prevData,newData]
 //   })
 // }
- 
+      const menunav = (
+        <Menu>
+          <Link to='/insert'>
+          <Menu.Item>
+            ลงทะเบียนนักเรียน
+          </Menu.Item>
+          </Link>
+          <Link to='/Data'>
+          <Menu.Item>
+            ข้อมูลนักเรียน
+          </Menu.Item>
+          </Link>
+        </Menu>
+        
+      )
   return(
     <ApolloProvider client={client}>
       <BrowserRouter>
-      <div className='btn-test'>
-        <Button  className='btn-main' type='submit' href='/insert'>ลงทะเบียน</Button>
-        <Button  className='btn-sec' type='submit' href='/Data'>ข้อมูลนักเรียน</Button>
-      </div>
-    <div className='container'>
+      <Layout>
+        <Affix offsetTop={0}>
+        <Header style={{width:'100%',padding:'0'}}>
+          <Row>
+          <Col span={4}>
+          <Menu mode='horizontal'>
+            <Link to='/'>
+            <Menu.Item>
+              Home
+            </Menu.Item>
+            </Link>
+            </Menu>
+          </Col>
+          <Col span={20}>
+            <Menu mode='horizontal' style={{justifyContent:'right'}}>
+              <Dropdown overlay={menunav} >
+                <a onClick={(e)=>e.preventDefault()}>
+                    ข้อมูลนักเรียน
+                    <DownOutlined/>
+                </a>
+              </Dropdown>
+              <Menu.Item>
+                ลงทะเบียนนักเรียน
+              </Menu.Item>
+              <Menu.Item>
+                ข้อมูลนักเรียน
+              </Menu.Item>
+              <Menu.Item>
+                Login
+              </Menu.Item>
+              <Menu.Item>
+                Sign Up
+              </Menu.Item>
+          </Menu>
+          </Col>
+          </Row>
+          {/* <div className='btn-test'>
+            <Button  className='btn-main' type='submit' href='/insert'>ลงทะเบียน</Button>
+            <Button  className='btn-sec' type='submit' href='/Data'>ข้อมูลนักเรียน</Button>
+          </div> */}
+        </Header>
+        </Affix>
+        <Content>
+          <div className='container'>
+          <Routes>  
+            {/* <Route path='/' element={App}></Route> */}
+            <Route path='/insert' element={<FormComponent/>}></Route>
+            <Route path='/Data' element={<GetUsers/>}></Route>
+          </Routes>
+          </div>
+        </Content>
+        <Footer style={{background:'pink'}}>
+          <Row>
+            <Col span={12}>
+              ติดต่อ : 28 ซอยจันทร์ 32 แยก 2 แขวงทุ่งวัดดอน เขตสาทร กรุงเทพมหานคร 10120 โทร : 080 - 4696207
+            </Col>
+            <Col span={12} style={{justifyContent:'end',display:'flex'}}>
+                Power by MoMarD
+            </Col>
+          </Row>
+        </Footer>
+      </Layout>
+      
+    
       {/* <FormComponent 
       // onAddItems_d = {onAddNewItems_d}
       /> */}
@@ -150,11 +225,7 @@ function App() {
       {/* <ReportComponent data ={data}/> */}
     
     {/* <POST_QUERY/> */}
-    <Routes>
-      {/* <Route path='/' element={App}></Route> */}
-      <Route path='/insert' element={<FormComponent/>}></Route>
-      <Route path='/Data' element={<GetUsers/>}></Route>
-    </Routes></div>
+
     {/* <GetUsers/> */}
     </BrowserRouter>
     </ApolloProvider>
