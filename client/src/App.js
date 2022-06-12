@@ -15,7 +15,7 @@ import { Affix, Button, Col, Dropdown, Layout, Menu,Row, Space } from 'antd';
 import {Route,Routes,BrowserRouter, Link} from 'react-router-dom';
 import { Content, Footer, Header } from 'antd/lib/layout/layout';
 import { DownOutlined } from '@ant-design/icons';
-
+import MainCom from './Component/MainCom';
 
 
 const errorLink = onError(({ graphqlError, networkError})=>{
@@ -151,18 +151,16 @@ function App() {
       <Layout>
         <Affix offsetTop={0}>
         <Header style={{width:'100%',padding:'0'}}>
-          <Row>
+          <Row align='middle'>
           <Col span={4}>
-          <Menu mode='horizontal'>
-            <Link to='/'>
+          <Menu mode='horizontal' style={{backgroundColor:'#2f2f2f',borderWidth:'0'}}>
             <Menu.Item>
-              Home
+              <Link to='/' style={{color:'white'}}>Home</Link>
             </Menu.Item>
-            </Link>
             </Menu>
           </Col>
           <Col span={20}>
-            <Menu mode='horizontal' style={{justifyContent:'right'}}>
+            <Menu mode='horizontal' style={{justifyContent:'right',backgroundColor:'#2f2f2f',borderWidth:'0',color:'white'}}>
               <Dropdown overlay={menunav} >
                 <a onClick={(e)=>e.preventDefault()}>
                     ข้อมูลนักเรียน
@@ -170,10 +168,7 @@ function App() {
                 </a>
               </Dropdown>
               <Menu.Item>
-                ลงทะเบียนนักเรียน
-              </Menu.Item>
-              <Menu.Item>
-                ข้อมูลนักเรียน
+                ติดต่อเรา
               </Menu.Item>
               <Menu.Item>
                 Login
@@ -194,18 +189,20 @@ function App() {
           <div className='container'>
           <Routes>  
             {/* <Route path='/' element={App}></Route> */}
+            <Route path='/' element={<MainCom/>}></Route>
             <Route path='/insert' element={<FormComponent/>}></Route>
             <Route path='/Data' element={<GetUsers/>}></Route>
           </Routes>
           </div>
         </Content>
-        <Footer style={{background:'pink'}}>
+        <Footer style={{background:'#4f4f4f',color:'white',padding:'20px'}}>
           <Row>
             <Col span={12}>
-              ติดต่อ : 28 ซอยจันทร์ 32 แยก 2 แขวงทุ่งวัดดอน เขตสาทร กรุงเทพมหานคร 10120 โทร : 080 - 4696207
+              <p style={{display:'flex',alignItems:'center'}}>ติดต่อ : 28 ซอยจันทร์ 32 แยก 2 แขวงทุ่งวัดดอน เขตสาทร กรุงเทพมหานคร 10120 </p>
+              <p style={{display:'flex',alignItems:'center'}}>โทร : 080 - 4696207</p>
             </Col>
             <Col span={12} style={{justifyContent:'end',display:'flex'}}>
-                Power by MoMarD
+                <p style={{display:'flex',alignItems:'center'}}>Power by MoMarD</p>
             </Col>
           </Row>
         </Footer>

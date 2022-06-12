@@ -26,6 +26,7 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 80%;
 }
 .btn-test{
   display: flex;
@@ -42,4 +43,7 @@ body{
   margin-left: 10px;
   background-color: burlywood;
   color: black;
+}
+p{
+  margin: 0;
 }
