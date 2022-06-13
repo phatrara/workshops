@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {useQuery,gql} from '@apollo/client';
+import {useQuery,gql, useMutation} from '@apollo/client';
 import {LOAD_USERS} from '../GraphQL/Queries'
 import customStyles from "./TablecustomStyles";
 import { Col, Row, Space, Table} from 'antd';
 import {EditOutlined,DeleteFilled} from '@ant-design/icons'
+import UpdateUser from "./updateUser";
+import { REMOVE_USER_MUTATION } from "../GraphQL/Mutation";
+
+
 
 function GetUsers() {
     
@@ -49,17 +53,27 @@ function GetUsers() {
           render: (_, record) => (
             <>
             <Space size="middle">
-              <a>Edit<EditOutlined /> {record.name}</a>
-              <a>Delete<DeleteFilled /></a>
-              
+              <a >Edit<EditOutlined /> {record.name}</a>
+              <a onFinish={onFinish} dataIndex={users.id} key={users.id}>Delete<DeleteFilled /></a>
             </Space></>
           ),
         },
       ];
+      
+      const onFinish = ()=>{
+        
+        removeUser({
+            variables:{
+                id:users.id
+            }
+        })
 
-
-  
-    const {loading,error,data} = useQuery(LOAD_USERS);
+            if (error){
+                console.log(error);
+            }
+    };
+    const [removeUser,{error}] = useMutation(REMOVE_USER_MUTATION);
+    const {loading,data} = useQuery(LOAD_USERS);
     const [users,setUsers] = useState([]);
     useEffect(()=>{
         if (data) {

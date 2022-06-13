@@ -1,4 +1,5 @@
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Form, Image, Input, Row } from "antd";
+import logo from '../img/login.png'
 
 function MainCom() {
     return(
@@ -6,7 +7,7 @@ function MainCom() {
         <Form>
             <Row>
                 <Col span={6}>
-                    <img src="../img/login.png"></img>
+                    <Image src={logo} preview={false}/>
                 </Col>
                 <Col span={18}>
                     <Row>

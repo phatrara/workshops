@@ -16,6 +16,7 @@ import {Route,Routes,BrowserRouter, Link} from 'react-router-dom';
 import { Content, Footer, Header } from 'antd/lib/layout/layout';
 import { DownOutlined } from '@ant-design/icons';
 import MainCom from './Component/MainCom';
+import UpdateUser from './Component/updateUser';
 
 
 const errorLink = onError(({ graphqlError, networkError})=>{

@@ -1,10 +1,14 @@
 
 
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLSchema , GraphQLString, GraphQLInt, GraphQLList } = graphql
+const { GraphQLObjectType, GraphQLSchema , GraphQLString, GraphQLInt, GraphQLList,GraphQLNonNull } = graphql
 
 const userData = require('../MOCK_DATA.json');
 const UserType = require("./TypeDefs/UserType")
+
+
+
+
 
 const RootQuery = new GraphQLObjectType({
     name:"RootQueryType",
@@ -44,6 +48,16 @@ const Mutation = new GraphQLObjectType({
                     Note:args.Note,
                     Gender:args.Gender
                 })
+                return args
+            }
+        },
+        removeUser:{
+            type: UserType,
+            args:{
+                id:{type: GraphQLInt},
+            },
+            resolve(parent,args){
+                userData.splice(args.id-1,1)
                 return args
             }
         }
