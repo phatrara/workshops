@@ -17,6 +17,7 @@ import { Content, Footer, Header } from 'antd/lib/layout/layout';
 import { DownOutlined } from '@ant-design/icons';
 import MainCom from './Component/MainCom';
 import UpdateUser from './Component/updateUser';
+import AddDeleteTableRows from './Component/AddDeleteTableRows';
 
 
 const errorLink = onError(({ graphqlError, networkError})=>{
@@ -190,7 +191,7 @@ function App() {
           <div className='container'>
           <Routes>  
             {/* <Route path='/' element={App}></Route> */}
-            <Route path='/' element={<MainCom/>}></Route>
+            <Route path='/' element={<AddDeleteTableRows/>}></Route>
             <Route path='/insert' element={<FormComponent/>}></Route>
             <Route path='/Data' element={<GetUsers/>}></Route>
           </Routes>

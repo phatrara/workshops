@@ -58,6 +58,7 @@ const Mutation = new GraphQLObjectType({
             },
             resolve(parent,args){
                 userData.splice(args.id-1,1)
+                // userData.pop(args.id)
                 return args
             }
         }
