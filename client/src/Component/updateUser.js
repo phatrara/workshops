@@ -7,6 +7,7 @@ import { LOAD_USERS } from "../GraphQL/Queries";
 
 
 function UpdateUser() {
+    const [removeUser,{error}] = useMutation(REMOVE_USER_MUTATION)
     const {loading,data} = useQuery(LOAD_USERS);
     const [users,setUsers] = useState([]);
     useEffect(()=>{
@@ -15,18 +16,31 @@ function UpdateUser() {
         // console.log(data.getAllUsers);
         }
     },[data])
-    const handleDeleteRow=(index)=> {
+    const deleteTableRows=(index)=> {
         const rows = [...users]
         rows.splice(index, 1);
         setUsers(rows)
+        removeUser({
+            variables:{
+                id:index+1
+            }
+        })
       }
+      const handleChange = (index, evnt)=>{
+    
+        const { name, value } = evnt.target;
+        const rowsInput = [...users];
+        rowsInput[index][name] = value;
+        setUsers(rowsInput);
+     
+    }
  
                 return(
                     users.map((data,index)=>{
                         const {first_name,last_name,Address,ID_card_number,Phone_Number,Gender,Note} = data;
                         return(
                         <div>
-                           <Button type="link" onClick={()=>(handleDeleteRow(index))} >Delete<DeleteFilled /></Button>
+                           <Button type="link" onClick={()=>(deleteTableRows(index))} >Delete<DeleteFilled /></Button>
                         </div>
                         )
                       })

@@ -1,12 +1,14 @@
 
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useState,useEffect } from "react";
+import { REMOVE_USER_MUTATION } from "../GraphQL/Mutation";
 import { LOAD_USERS } from "../GraphQL/Queries";
 import TableRows from "./TableRows"
 
 
 function AddDeleteTableRows(){
-    const {loading,error,data} = useQuery(LOAD_USERS)
+    const [removeUser,{error}] = useMutation(REMOVE_USER_MUTATION)
+    const {loading,data} = useQuery(LOAD_USERS)
     const [rowsData, setRowsData] = useState([]);
     useEffect(()=>{
         if (data) {
@@ -30,6 +32,12 @@ function AddDeleteTableRows(){
         const rows = [...rowsData];
         rows.splice(index, 1);
         setRowsData(rows);
+        removeUser({
+            variables:{
+                id:index+1
+            }
+        })
+        
    }
  
    const handleChange = (index, evnt)=>{
@@ -50,7 +58,7 @@ console.log(rowsData);
                       <tr>
                           <th>Full Name</th>
                           <th>Email Address</th>
-                          <th>Salary</th>
+                          <th>ID</th>
                           <th><button className="btn btn-outline-success" onClick={addTableRows} >+</button></th>
                       </tr>
                     </thead>

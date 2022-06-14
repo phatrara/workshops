@@ -33,9 +33,9 @@ export const REMOVE_USER_MUTATION = gql`
 
 mutation removeUser($id:Int!){
     removeUser(id:$id){
-      id
+        id
     }
-  }
+}
 
 
 `;

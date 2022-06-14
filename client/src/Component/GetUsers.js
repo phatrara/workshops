@@ -8,24 +8,46 @@ import UpdateUser from "./updateUser";
 import { REMOVE_USER_MUTATION } from "../GraphQL/Mutation";
 import { QueryDocumentKeys } from "graphql/language/ast";
 import {useLocation} from 'react-router-dom'
+import deleteTableRows from './updateUser'
 
 
-function GetUsers() {
+function GetUsers()  {
+
   const [removeUser,{error}] = useMutation(REMOVE_USER_MUTATION);
-  const {loading,data} = useQuery(LOAD_USERS);
+  const {loading,data,refetch} = useQuery(LOAD_USERS);
   const [users,setUsers] = useState([]);
+
+
+
   useEffect(()=>{
       if (data) {
       setUsers(data.getAllUsers)
       // console.log(data.getAllUsers);
       }
   },[data])
-  console.log(users);
-  const handleDeleteRow=(index)=> {
-    const rows = [...users]
-    rows.splice(index, 1);
-    setUsers(rows)
-  }
+  console.log(users.map((e)=>e.id));
+
+  const handleChange = (index, evnt)=>{
+    
+    const { name, value } = evnt.target;
+    const rowsInput = [...users];
+    rowsInput[index][name] = value;
+    setUsers(rowsInput);
+ 
+}
+
+const deleteTableRows=(index)=> {
+  console.log(index);
+  // const rows = [...users]
+  const rows = users.filter((e) => e.id !== index);
+  // rows.splice(index+1, 1);
+  setUsers(rows)
+  removeUser({
+      variables:{
+          id:index
+      }
+  })
+}
   // console.log(query.id);
   // const userRemove = (e) =>{
   //   console.log(users.id);
@@ -76,14 +98,17 @@ function GetUsers() {
           title: 'Action',
           key: 'action',
           render: (_, record) => (
+
             <>
             <Space size="middle">
               <a >Edit<EditOutlined /> {record.name}</a>
-              <Button type="link" onClick={handleDeleteRow} >Delete<DeleteFilled /></Button>
-              
-            </Space></>
+              <Button type="link" onClick={()=>(deleteTableRows(record.id)) }  >Delete<DeleteFilled /></Button>
+              {/* <UpdateUser/> */}
+            </Space>
+            </>
           ),
         },
+
       ];
       console.log('');
       // function useQuery() {
@@ -107,21 +132,9 @@ function GetUsers() {
       //   );
       // }
 
-      const onFinish = ()=>{
-        
-        removeUser({
-          variables:{
-              id:users.getAllUsers.id
-          }
-          
-      })
-
-            if (error){
-                console.log(error);
-            }
-    };
-
+      
     const Getalluser = () => 
+
     <Table 
     columns={columns} 
     dataSource={users}
@@ -134,19 +147,19 @@ function GetUsers() {
         <div>
           <Row justify="center"span={16}>
             <Col span={24}>
-            <Getalluser />
-            <UpdateUser/>
+              <Getalluser />
+              </Col>
+              {/* <UpdateUser/> */}
+            
             {/* <Child name={query.get("id")} />
             <Input  type="text"/>
             <Button>Apply</Button> */}
-            </Col>
           </Row>
         {/* {users.map((val)=>{ return <h1>{val.first_name}</h1>  })}             */}
         </div>
         )
-     
 }
-
+     
 export default GetUsers;
 
 
