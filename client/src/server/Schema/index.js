@@ -6,7 +6,7 @@ const { GraphQLObjectType, GraphQLSchema , GraphQLString, GraphQLInt, GraphQLLis
 const userData = require('../MOCK_DATA.json');
 const UserType = require("./TypeDefs/UserType")
 
-
+let number = 10;
 
 
 
@@ -39,7 +39,7 @@ const Mutation = new GraphQLObjectType({
             },
             resolve(parent,args){
                 userData.push({
-                    id:userData.length + 1,
+                    id:number=number+1,
                     first_name:args.first_name,
                     last_name:args.last_name,
                     Address:args.Address,
@@ -57,7 +57,11 @@ const Mutation = new GraphQLObjectType({
                 id:{type: GraphQLInt},
             },
             resolve(parent,args){
-                userData.splice(args.id-1,1)
+                // const i = userData.find(e=>e===id)
+                const i = userData.findIndex(e=>e.id == args.id)
+                // const i = userData.filter((e) => e.id )
+                // console.log(i);
+                userData.splice( i ,1)
                 // userData.pop(args.id)
                 return args
             }

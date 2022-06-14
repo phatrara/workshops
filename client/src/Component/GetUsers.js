@@ -39,15 +39,26 @@ function GetUsers()  {
 const deleteTableRows=(index)=> {
   console.log(index);
   // const rows = [...users]
+  // this.setUsers({users:this.state.users.filter((e) => e.id !== index)})
   const rows = users.filter((e) => e.id !== index);
-  // rows.splice(index+1, 1);
+  // const rows = users.splice(index, 1);
   setUsers(rows)
   removeUser({
       variables:{
           id:index
       }
-  })
+  },).then(refetch)
+  // console.log(index);
 }
+
+// const saveChange = input =>{
+//   setIsOpen(false);
+//   removeUser({
+//     variables:{
+//         id:index
+//     }
+// }).then(refetch);
+// }
   // console.log(query.id);
   // const userRemove = (e) =>{
   //   console.log(users.id);
@@ -104,6 +115,7 @@ const deleteTableRows=(index)=> {
               <a >Edit<EditOutlined /> {record.name}</a>
               <Button type="link" onClick={()=>(deleteTableRows(record.id)) }  >Delete<DeleteFilled /></Button>
               {/* <UpdateUser/> */}
+              {/* onClick={()=>(deleteTableRows(record.id)) */}
             </Space>
             </>
           ),
