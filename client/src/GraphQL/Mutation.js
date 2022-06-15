@@ -39,3 +39,37 @@ mutation removeUser($id:Int!){
 
 
 `;
+
+export const UPDATE_USER_MUTAION = gql`
+
+mutation updateUser(
+    $id:Int!
+    $first_name:String!
+    $last_name:String!
+    $Address:String!
+    $ID_card_number:String!
+    $Phone_Number:String!
+    $Note:String!
+    ){
+    updateUser(
+        id:$id
+        first_name:$first_name
+        last_name:$last_name
+        Address:$Address
+        ID_card_number:$ID_card_number
+        Phone_Number:$Phone_Number
+        Note:$Note
+        ){
+        id
+        Gender
+        first_name
+        laast_name
+        Address
+        ID_card_number
+        Phone_Number
+        Note
+    }
+}
+
+
+`;

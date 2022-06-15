@@ -60,10 +60,26 @@ const Mutation = new GraphQLObjectType({
                 // const i = userData.find(e=>e===id)
                 const i = userData.findIndex(e=>e.id == args.id)
                 // const i = userData.filter((e) => e.id )
-                console.log('i =',i); 
+                // console.log('i =',i); 
                 userData.splice( i ,1)
-                console.log('userData = ',userData);
+                // console.log('userData = ',userData);
                 return args
+            }
+        },
+        updateUser:{
+            type: UserType,
+            args:{
+                id:{type: GraphQLInt},
+                first_name:{type:GraphQLString},
+                last_name:{type:GraphQLString},
+                Address:{type:GraphQLString},
+                ID_card_number:{type:GraphQLString},
+                Phone_Number:{type:GraphQLString},
+                Note:{type:GraphQLString},
+            },
+            resolve(parent,args){
+                const i = userData.findIndex(e=>e.id == args.id)
+                userData.splice(i,1,{...args})
             }
         }
     }
