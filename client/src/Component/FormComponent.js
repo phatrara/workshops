@@ -154,6 +154,7 @@ const FormComponent =(props)=>{
                 setPhone('')
                 setSex('เด็กชาย')
                 setFormValid(false)
+                window.location.reload();
         };    
 
     return(

@@ -40,9 +40,9 @@ const deleteTableRows=(index)=> {
   console.log(index);
   // const rows = [...users]
   // this.setUsers({users:this.state.users.filter((e) => e.id !== index)})
-  const rows = users.filter((e) => e.id !== index);
+  // const rows = users.filter((e) => e.id !== index);
   // const rows = users.splice(index, 1);
-  setUsers(rows)
+  // setUsers(rows)
   removeUser({
       variables:{
           id:index
@@ -113,9 +113,8 @@ const deleteTableRows=(index)=> {
             <>
             <Space size="middle">
               <a >Edit<EditOutlined /> {record.name}</a>
-              <Button type="link" onClick={()=>(deleteTableRows(record.id)) }  >Delete<DeleteFilled /></Button>
-              {/* <UpdateUser/> */}
-              {/* onClick={()=>(deleteTableRows(record.id)) */}
+              <Button type="link" onClick={()=>(deleteTableRows(record.id))}  >Delete<DeleteFilled /></Button>
+              {/* <UpdateUser/> */} 
             </Space>
             </>
           ),

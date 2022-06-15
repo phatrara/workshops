@@ -60,9 +60,9 @@ const Mutation = new GraphQLObjectType({
                 // const i = userData.find(e=>e===id)
                 const i = userData.findIndex(e=>e.id == args.id)
                 // const i = userData.filter((e) => e.id )
-                // console.log(i);
+                console.log('i =',i); 
                 userData.splice( i ,1)
-                // userData.pop(args.id)
+                console.log('userData = ',userData);
                 return args
             }
         }
