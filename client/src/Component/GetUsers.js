@@ -2,53 +2,100 @@ import React, { useEffect, useState } from "react";
 import {useQuery,gql, useMutation} from '@apollo/client';
 import {LOAD_USERS} from '../GraphQL/Queries'
 import customStyles from "./TablecustomStyles";
-import { Button, Col, Form, Input, Row, Space, Table} from 'antd';
+import { Button, Col, Form, Input, Row, Space, Table,Modal} from 'antd';
 import {EditOutlined,DeleteFilled} from '@ant-design/icons'
 import UpdateUser from "./updateUser";
 import { REMOVE_USER_MUTATION } from "../GraphQL/Mutation";
+import { UPDATE_USER_MUTAION } from "../GraphQL/Mutation";
 import { QueryDocumentKeys } from "graphql/language/ast";
 import {useLocation} from 'react-router-dom'
 import deleteTableRows from './updateUser'
 
 
+
 function GetUsers()  {
 
   const [removeUser,{error}] = useMutation(REMOVE_USER_MUTATION);
+  const [updateUser] = useMutation(UPDATE_USER_MUTAION);
   const {loading,data,refetch} = useQuery(LOAD_USERS);
   const [users,setUsers] = useState([]);
   const [editrow,setEditrow] = useState(null);
   const [formdata] = Form.useForm();
+  const [newData,setNewData] = useState([]);
+  // const [isedit,setIsedit] = useState(false);
+
+
+
   useEffect(()=>{
       if (data) {
       setUsers(data.getAllUsers)
       // console.log(data.getAllUsers);
       }
   },[data])
-  console.log(users.map((e)=>e.id));
+  // console.log(users.map((e)=>e.id));
 
 const deleteTableRows=(index)=> {
   console.log(index);
+  Modal.confirm({
+    title:'คุณแน่ในที่จะลบข้อมูลใช่ไหม',
+    okText:'Yes',
+    cancelText:'No',
+    onOk:()=>{
+        removeUser({
+      variables:{
+          id:index
+      }
+  },).then(refetch)
+    }
+  })
+  
   // const rows = [...users]
   // this.setUsers({users:this.state.users.filter((e) => e.id !== index)})
   // const rows = users.filter((e) => e.id !== index);
   // const rows = users.splice(index, 1);
   // setUsers(rows)
-  removeUser({
-      variables:{
-          id:index
-      }
-  },).then(refetch)
+
   // console.log(index);
 }
+// const editUser = (record)=>{
+//   setIsedit(true);
+//   setEditrow({...record})
+// }
+
+
+
 const updateUserrow =(values)=>{
-  const updateDataUser = [...users]
-  updateDataUser.splice(editrow,1,{...values,id:editrow})
-  console.log(editrow);
-  setUsers(updateDataUser)
+  // const updateDataUser = [...users]
+  // console.log('value Data = ',values.first_name);
+  // const i = users.findIndex(e=>e.id === editrow)
+  // updateDataUser.splice(i,1,{...values,id:editrow})
+  // console.log(editrow);
+  // setUsers(updateDataUser)
   setEditrow(null)
-  console.log('data = ',updateDataUser);
-  console.log('users Data = ',users);
+  console.log('value Data2 = ',values.first_name);
+  updateUser({
+    variables:{
+      id:editrow,
+      first_name:values.first_name,
+      last_name:values.last_name,
+      Gender:values.Gender,
+      Address:values.Address,
+      ID_card_number:values.ID_card_number,
+      Phone_Number:values.Phone_Number,
+      Note:values.Note,
+    }
+  }).then(refetch);
+  // console.log('');
+  // console.log('formdata fn',formdata.first_name);
+  // console.log('formdata',formdata);
+
+  // window.location.reload();
+  // console.log('updateusers',updateDataUser);
+  // console.log('users',users);
 }
+//   console.log('data = ',updateDataUser);
+  console.log('users Data = ',users);
+// }
 // const saveChange = input =>{
 //   setIsOpen(false);
 //   removeUser({
@@ -67,6 +114,7 @@ const updateUserrow =(values)=>{
   // const handleDelete = (index, e) => {
   //   setUsers(users.filter((User, i) => i !== index));
   // };
+
     const columns = [
         {
             title: 'ลำดับ',
@@ -85,7 +133,7 @@ const updateUserrow =(values)=>{
               required:true,
               message:'กรุณากรอกข้อมูล ชื่อจริง'
              }]}>
-                <Input/>
+                <Input />
               </Form.Item>
             }else{
               return <p>{text}</p>
@@ -102,7 +150,26 @@ const updateUserrow =(values)=>{
                name="last_name"
                rules={[{
                 required:true,
-                message:'กรุณากรอกข้อมูล ชื่อจริง'
+                message:'กรุณากรอกข้อมูล นามสกุล'
+               }]}>
+                  <Input/>
+                </Form.Item>
+              }else{
+                return <p>{text}</p>
+              }
+            }
+          },
+          {
+            title: 'เพศ',
+            dataIndex: 'Gender',
+            key: 'Gender',
+            render:(text,record)=>{
+              if(editrow === record.id){
+               return <Form.Item
+               name="Gender"
+               rules={[{
+                required:true,
+                message:'กรุณากรอกข้อมูล เพศ'
                }]}>
                   <Input/>
                 </Form.Item>
@@ -121,7 +188,7 @@ const updateUserrow =(values)=>{
              name="Address"
              rules={[{
               required:true,
-              message:'กรุณากรอกข้อมูล ชื่อจริง'
+              message:'กรุณากรอกข้อมูล ที่อยู่'
              }]}>
                 <Input/>
               </Form.Item>
@@ -140,7 +207,7 @@ const updateUserrow =(values)=>{
              name="ID_card_number"
              rules={[{
               required:true,
-              message:'กรุณากรอกข้อมูล ชื่อจริง'
+              message:'กรุณากรอกข้อมูล เลขบัตรประชาชน'
              }]}>
                 <Input/>
               </Form.Item>
@@ -159,7 +226,7 @@ const updateUserrow =(values)=>{
                name="Phone_Number"
                rules={[{
                 required:true,
-                message:'กรุณากรอกข้อมูล ชื่อจริง'
+                message:'กรุณากรอกข้อมูล เบอร์โทร'
                }]}>
                   <Input/>
                 </Form.Item>
@@ -171,16 +238,13 @@ const updateUserrow =(values)=>{
           {
             title: 'หมายเหตุ',
             dataIndex: 'Note',
-            // key: 'Note',
+            key: 'Note',
             render:(text,record)=>{
               if(editrow === record.id){
                return <Form.Item
                name="Note"
-               rules={[{
-                required:true,
-                message:'กรุณากรอกข้อมูล ชื่อจริง'
-               }]}>
-                  <Input/>
+               >
+                  <Input />
                 </Form.Item>
               }else{
                 return <p>{text}</p>
@@ -190,33 +254,38 @@ const updateUserrow =(values)=>{
         {
           title: 'Action',
           key: 'action',
-          render: (_, record) => (
-            <>
-            <Space size="middle">
-              <Button type="link" onClick={()=>{
-                setEditrow(record.id)
-                formdata.setFieldsValue({
-                  first_name:record.first_name,
-                  last_name:record.last_name,
-                  Address:record.Address,
-                  ID_card_number:record.ID_card_number,
-                  Phone_Number:record.Phone_Number,
-                  Note:record.Note
-                })
-                console.log(record.id);
-              }}>Edit</Button>
-              <Button type="link" htmlType="submit">save</Button>
-              {/* <a >Edit<EditOutlined /> {record.name}</a> */}
-              <Button type="link" onClick={()=>(deleteTableRows(record.id))}  >Delete<DeleteFilled /></Button>
-              {/* <UpdateUser/> */} 
-            </Space>
-            </>
+        render: (_, record) => {
+          return (
+          <>
+          <Space size="middle">
+            {/* <Button type="link" onClick={()=>{
+              editUser(record);
+            }}>EEDDIITT</Button> */}
+            <Button type="link" onClick={()=>{
+              setEditrow(record.id)
+              formdata.setFieldsValue({
+                first_name:record.first_name,
+                last_name:record.last_name,
+                Address:record.Address,
+                ID_card_number:record.ID_card_number,
+                Phone_Number:record.Phone_Number,
+                Note:record.Note,
+                Gender:record.Gender,
+              })
+              console.log(record.id);
+            }}>Edit</Button>
+            <Button type="link" htmlType="submit">save</Button>
+            {/* <a >Edit<EditOutlined /> {record.name}</a> */}
+            <Button type="link" onClick={()=>(deleteTableRows(record.id))}  >Delete<DeleteFilled /></Button>
+            {/* <UpdateUser/> */}
+            
+          </Space>
+          </>
 
-          ),
+        )}
         },
 
       ];
-      console.log('');
       // function useQuery() {
       //   const { search } = useLocation();
       
@@ -245,7 +314,6 @@ const updateUserrow =(values)=>{
     dataSource={users}
     size='middle'
     />
-    
 
         return(
         <div>
@@ -253,6 +321,28 @@ const updateUserrow =(values)=>{
             <Col span={24}>
               <Form form={formdata} onFinish={updateUserrow}>
               <Getalluser />
+              {/* <Modal
+              title='Edit Data.'
+              visible={isedit}
+              okText='Save'
+              onCancel={()=>{
+                resetEdit()
+              }}
+              onOk={()=>{
+                setUsers(pre=>{
+                  return pre.map(e=>{
+                    if(e.id === isedit.id){
+                      return isedit
+                    }else{
+                      return e
+                    }
+                  })
+                })
+              }}>
+                <Input value={editrow?.first_name} onChange={(e)=>{setEditrow(pre=>{
+                  return {...pre,first_name:e.target.value}
+                })}}/>
+              </Modal>  */}
               </Form>
               </Col>
               {/* <UpdateUser/> */}

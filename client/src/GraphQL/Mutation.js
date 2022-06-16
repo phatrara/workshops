@@ -50,6 +50,7 @@ mutation updateUser(
     $ID_card_number:String!
     $Phone_Number:String!
     $Note:String!
+    $Gender:String!
     ){
     updateUser(
         id:$id
@@ -59,11 +60,12 @@ mutation updateUser(
         ID_card_number:$ID_card_number
         Phone_Number:$Phone_Number
         Note:$Note
+        Gender:$Gender
         ){
         id
         Gender
         first_name
-        laast_name
+        last_name
         Address
         ID_card_number
         Phone_Number

@@ -76,9 +76,14 @@ const Mutation = new GraphQLObjectType({
                 ID_card_number:{type:GraphQLString},
                 Phone_Number:{type:GraphQLString},
                 Note:{type:GraphQLString},
+                Gender:{type:GraphQLString},
             },
             resolve(parent,args){
-                const i = userData.findIndex(e=>e.id == args.id)
+                // const i = userData.filter(e=>e.id)
+                // const i = userData.findIndex(e=>e.id === args.id)
+                // userData.splice(i,1,{...args})
+                const i = userData.findIndex(e=>e.id === args.id)
+                console.log({...args});
                 userData.splice(i,1,{...args})
             }
         }
