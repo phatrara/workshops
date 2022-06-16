@@ -1,7 +1,7 @@
 import './FormComponent.css';
 import {useEffect, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { CREATE_USER_MUTATION } from '../GraphQL/Mutation';
+import { CREATE_STUDENT_MUTATION } from '../GraphQL/Mutation';
 import { useMutation } from '@apollo/client';
 import { Button, Form, Input, InputNumber,Select} from 'antd';
 import { DownOutlined } from '@ant-design/icons';
@@ -17,7 +17,7 @@ const FormComponent =(props)=>{
     const [sex,setSex] = useState('เด็กชาย');
     const [formValid,setFormValid] = useState(false);
     // const fullName = sex+firstName+lastName
-    const [createUser,{error}] = useMutation(CREATE_USER_MUTATION);
+    const [createStudent,{error}] = useMutation(CREATE_STUDENT_MUTATION);
 
     const handleNameChange = (event)=>{
         setFirstName(event.target.value);
@@ -42,7 +42,7 @@ const FormComponent =(props)=>{
     }
     const saveData = (event)=>{
         event.preventDefault();
-            createUser({
+            createStudent({
                 variables:{
                     Gender:sex,
                     first_name:firstName,
@@ -129,7 +129,7 @@ const FormComponent =(props)=>{
     const onFinish = (event)=>{
             // event.preventDefault();
             // console.log(firstName,lastName,sex);
-                createUser({
+                createStudent({
                     variables:{
                         Gender:sex,
                         first_name:firstName,
@@ -155,6 +155,7 @@ const FormComponent =(props)=>{
                 setSex('เด็กชาย')
                 setFormValid(false)
                 window.location.reload();
+                
         };    
 
     return(

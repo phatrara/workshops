@@ -1,0 +1,16 @@
+label{
+    height: 20px !important;
+    width:80px  !important;
+}
+
+Form.Item{
+    display: inline-block;
+}
+.ant-form {
+    width: 80%;
+    display: block;
+}
+.ant-form-item{
+    margin: 0;
+    /* background-color: antiquewhite; */
+}

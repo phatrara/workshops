@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { REMOVE_USER_MUTATION } from "../GraphQL/Mutation";
+import { REMOVE_STUDENT_MUTATION } from "../GraphQL/Mutation";
 import { useMutation, useQuery } from "@apollo/client";
 import {DeleteFilled} from '@ant-design/icons'
 import { Button } from "antd";
@@ -7,7 +7,7 @@ import { LOAD_USERS } from "../GraphQL/Queries";
 
 
 function UpdateUser() {
-    const [removeUser,{error}] = useMutation(REMOVE_USER_MUTATION)
+    const [removeStudent,{error}] = useMutation(REMOVE_STUDENT_MUTATION)
     const {loading,data} = useQuery(LOAD_USERS);
     const [users,setUsers] = useState([]);
     useEffect(()=>{
@@ -20,7 +20,7 @@ function UpdateUser() {
         const rows = [...users]
         rows.splice(index, 1);
         setUsers(rows)
-        removeUser({
+        removeStudent({
             variables:{
                 id:index+1
             }

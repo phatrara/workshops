@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {useQuery,gql, useMutation} from '@apollo/client';
-import {LOAD_USERS} from '../GraphQL/Queries'
+import {LOAD_STUDENT} from '../GraphQL/Queries'
 import customStyles from "./TablecustomStyles";
 import { Button, Col, Form, Input, Row, Space, Table,Modal} from 'antd';
 import {EditOutlined,DeleteFilled} from '@ant-design/icons'
 import UpdateUser from "./updateUser";
-import { REMOVE_USER_MUTATION } from "../GraphQL/Mutation";
-import { UPDATE_USER_MUTAION } from "../GraphQL/Mutation";
+import { REMOVE_STUDENT_MUTATION } from "../GraphQL/Mutation";
+import { UPDATE_STUDENT_MUTAION } from "../GraphQL/Mutation";
 import { QueryDocumentKeys } from "graphql/language/ast";
 import {useLocation} from 'react-router-dom'
 import deleteTableRows from './updateUser'
@@ -15,20 +15,20 @@ import deleteTableRows from './updateUser'
 
 function GetUsers()  {
 
-  const [removeUser,{error}] = useMutation(REMOVE_USER_MUTATION);
-  const [updateUser] = useMutation(UPDATE_USER_MUTAION);
-  const {loading,data,refetch} = useQuery(LOAD_USERS);
-  const [users,setUsers] = useState([]);
+  const [removeStudent,{error}] = useMutation(REMOVE_STUDENT_MUTATION);
+  const [updateStudent] = useMutation(UPDATE_STUDENT_MUTAION);
+  const {loading,data,refetch} = useQuery(LOAD_STUDENT);
+  const [student,setStudent] = useState([]);
   const [editrow,setEditrow] = useState(null);
   const [formdata] = Form.useForm();
   const [newData,setNewData] = useState([]);
   // const [isedit,setIsedit] = useState(false);
-
+console.log(data);
 
 
   useEffect(()=>{
       if (data) {
-      setUsers(data.getAllUsers)
+      setStudent(data.getAllStudent)
       // console.log(data.getAllUsers);
       }
   },[data])
@@ -41,12 +41,13 @@ const deleteTableRows=(index)=> {
     okText:'Yes',
     cancelText:'No',
     onOk:()=>{
-        removeUser({
+        removeStudent({
       variables:{
           id:index
       }
   },).then(refetch)
-    }
+    },
+    
   })
   
   // const rows = [...users]
@@ -73,7 +74,7 @@ const updateUserrow =(values)=>{
   // setUsers(updateDataUser)
   setEditrow(null)
   console.log('value Data2 = ',values.first_name);
-  updateUser({
+  updateStudent({
     variables:{
       id:editrow,
       first_name:values.first_name,
@@ -94,7 +95,7 @@ const updateUserrow =(values)=>{
   // console.log('users',users);
 }
 //   console.log('data = ',updateDataUser);
-  console.log('users Data = ',users);
+  console.log('student Data = ',student);
 // }
 // const saveChange = input =>{
 //   setIsOpen(false);
@@ -311,7 +312,7 @@ const updateUserrow =(values)=>{
     const Getalluser = () => 
     <Table 
     columns={columns} 
-    dataSource={users}
+    dataSource={student}
     size='middle'
     />
 

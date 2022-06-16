@@ -1,24 +1,18 @@
 import './App.css';
 // import { v4 as uuidv4 } from 'uuid';
 import FormComponent from './Component/FormComponent';
-// import Item_d from './Component/item';
-// import { useState } from 'react';
-// import ReportComponent from './Component/ReportComponent';
-// import DataTable from 'react-data-table-component';
-// import {createSelector} from 'reselect'
-// import customStyles from './Component/TablecustomStyles';
 import {  ApolloClient,  InMemoryCache,  ApolloProvider,  useQuery,  gql, HttpLink ,from } from "@apollo/client";
 import {onError} from '@apollo/client/link/error';
-// import CreatePost from './Component/createPosts';
 import GetUsers from './Component/GetUsers';
 import { Affix, Button, Col, Dropdown, Layout, Menu,Row, Space } from 'antd';
 import {Route,Routes,BrowserRouter, Link} from 'react-router-dom';
 import { Content, Footer, Header } from 'antd/lib/layout/layout';
-import { DownOutlined } from '@ant-design/icons';
-import MainCom from './Component/MainCom';
-import UpdateUser from './Component/updateUser';
-import AddDeleteTableRows from './Component/AddDeleteTableRows';
-
+import { DownOutlined, WindowsFilled } from '@ant-design/icons';
+import LoginCom from './Component/LoginCom';
+import  Register  from './Component/Register';
+import { useState } from 'react';
+import useToken from './Component/useToken';
+import { getKeyThenIncreaseKey } from 'antd/lib/message';
 
 const errorLink = onError(({ graphqlError, networkError})=>{
   if (graphqlError){
@@ -37,101 +31,8 @@ const client = new ApolloClient({
 });
 
 
-
-// function POST_QUERY() {
-  
-// const QUERY = gql`
-//       {
-//         posts{
-//           id
-//           title
-//           body
-//         }
-//       }
-// `;
-
-
-//   const { loading, error, data } = useQuery(QUERY);
-//   if (loading) return <p>Loading...</p>;
-//   if (error) return <p>Error :</p>;
-
-//   return data.posts.map(({ Gender,first_name,last_name,Address,ID_Card_Number,Phone_Number,Note,id }) => (
-//     <div key={id}>
-//       <DataTable
-//             columns={columns}
-//             data={data}
-//             customStyles={customStyles}
-//         />
-//     </div>
-//   ));
-// }
-// client
-//   .query({
-//     query: testQuery
-//   })  .then(result => console.log(result));
-
-// const columns = [
-//   {
-//       name: 'คำนำหน้า',
-//       selector: row => row.Gender,
-//       width:'100px'
-//   },
-//   {
-//       name: 'ชื่อจริง',
-//       selector: row => row.first_name,
-//   },  
-//   {
-//       name: 'นามสกุล',
-//       selector: row => row.last_name,
-//   },
-//   {
-//       name: 'หมายเลขบัตรประชาชน',
-//       selector: row => row.ID_Card_Number,
-//       width:'150px'
-//   },
-//   {
-//       name: 'เบอร์โทรศัพท์',
-//       selector: row => row.Phone_Number,
-//       width:'150px'
-//   },
-//   {
-//       name: 'ที่อยู่',
-//       selector: row => row.Address,
-//       width:'200px'
-//   },
-//   {
-//       name: 'หมายเหตุ',
-//       selector: row => row.Note,
-//   }
-// ];
-
-
 function App() {
-
-//  const Data = [
-//   {id:uuidv4(),sex:"เด็กชาย",firstName:"จักรภัทร",lastName:"เต็มวงษ์",numberId:"1234567890123",phone:"0987768875",address:"28 ซอยจันทร์ 40 ",note:"ไม่มี"},
-//   {id:uuidv4(),sex:"เด็กหญิง",firstName:"สุดารัตน์",lastName:"น้อยอุ่นแสน",numberId:"4626426615576",phone:"0873346532",address:"28 ซอยจันทร์ 40 ",note:"ไม่มี"},
-//   {id:uuidv4(),sex:"เด็กชาย",firstName:"พัชร",lastName:"ชินจอหอ",numberId:"1201839472240",phone:"0627659987",address:"28 ซอยจันทร์ 40 ",note:"ไม่มี"},
-//   {id:uuidv4(),sex:"เด็กชาย",firstName:"พชร",lastName:"แสงอุ่น",numberId:"6389493525984",phone:"0974537531",address:"28 ซอยจันทร์ 40 ",note:"ไม่มี"},
-//   {id:uuidv4(),sex:"เด็กหญิง",firstName:"สุนารี",lastName:"มณีแก้ว",numberId:"1234567890123",phone:"0987768875",address:"28 ซอยจันทร์ 40 ",note:"ไม่มี"},
-//   {id:uuidv4(),sex:"เด็กชาย",firstName:"จารุวงศ์",lastName:"ศรีเสมา",numberId:"1234567890123",phone:"0987768875",address:"28 ซอยจันทร์ 40 ",note:"ไม่มี"}
-// ]
-  
-// const [data,setData] = useState(Data);
-
-// const selectSex = data => data.sex
-// const selectFirstname = data => data.firstName
-// const selectLastname = data => data.lastName
-
-// const selectFullname = createSelector([selectSex,selectFirstname,selectLastname],(sex,firstName,lastName)=>{
-//   return `${sex}${firstName} ${lastName}`
-// })
-
-// const onAddNewItems_d = (newData) => {
-//   setData((prevData)=>{
-//     return [...prevData,newData]
-//   })
-// }
+  const {token,setToken} = useToken();
       const menunav = (
         <Menu>
           <Link to='/insert'>
@@ -147,6 +48,13 @@ function App() {
         </Menu>
         
       )
+      if(!token){
+        return <LoginCom setToken={setToken} />
+      }
+      const handlelogout =()=>{
+        sessionStorage.removeItem('token');
+        window.location.href = "/"
+      }
   return(
     <ApolloProvider client={client}>
       <BrowserRouter>
@@ -173,10 +81,13 @@ function App() {
                 ติดต่อเรา
               </Menu.Item>
               <Menu.Item>
-                Login
+              <Link to='/Login' style={{color:'while'}}>Login</Link>
               </Menu.Item>
               <Menu.Item>
-                Sign Up
+              <Button type='link' onClick={handlelogout}>Log out</Button>
+              </Menu.Item>
+              <Menu.Item>
+                <Link to='/Register' style={{color:'while'}}>Sign up</Link>
               </Menu.Item>
           </Menu>
           </Col>
@@ -191,12 +102,15 @@ function App() {
           <div className='container'>
           <Routes>  
             {/* <Route path='/' element={App}></Route> */}
-            <Route path='/' element={<AddDeleteTableRows/>}></Route>
+            <Route path='/' element={<LoginCom/>}></Route>
             <Route path='/insert' element={<FormComponent/>}></Route>
             <Route path='/Data' element={<GetUsers/>}></Route>
+            <Route path='/Register' element={<Register/>}></Route>
+            <Route path='/Login' element={<LoginCom/>}></Route>
           </Routes>
           </div>
         </Content>
+        <div id='footer'>
         <Footer style={{background:'#4f4f4f',color:'white',padding:'20px'}}>
           <Row>
             <Col span={12}>
@@ -207,7 +121,7 @@ function App() {
                 <p style={{display:'flex',alignItems:'center'}}>Power by MoMarD</p>
             </Col>
           </Row>
-        </Footer>
+        </Footer></div>
       </Layout>
       
     

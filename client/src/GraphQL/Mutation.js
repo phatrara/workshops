@@ -1,9 +1,9 @@
 import {gql} from '@apollo/client';
 
 
-export const CREATE_USER_MUTATION = gql`
+export const CREATE_STUDENT_MUTATION = gql`
 
-mutation createUser(
+mutation createStudent(
     $Gender:String!
     $first_name:String!
     $last_name:String!
@@ -13,7 +13,7 @@ mutation createUser(
     $Note:String!
 
 ){
-    createUser(
+    createStudent(
         Gender:$Gender
         first_name:$first_name
         last_name:$last_name
@@ -29,10 +29,10 @@ mutation createUser(
 
 `;
 
-export const REMOVE_USER_MUTATION = gql`
+export const REMOVE_STUDENT_MUTATION = gql`
 
-mutation removeUser($id:Int!){
-    removeUser(id:$id){
+mutation removeStudent($id:Int!){
+    removeStudent(id:$id){
         id
     }
 }
@@ -40,9 +40,9 @@ mutation removeUser($id:Int!){
 
 `;
 
-export const UPDATE_USER_MUTAION = gql`
+export const UPDATE_STUDENT_MUTAION = gql`
 
-mutation updateUser(
+mutation updateStudent(
     $id:Int!
     $first_name:String!
     $last_name:String!
@@ -52,7 +52,7 @@ mutation updateUser(
     $Note:String!
     $Gender:String!
     ){
-    updateUser(
+    updateStudent(
         id:$id
         first_name:$first_name
         last_name:$last_name
@@ -70,6 +70,28 @@ mutation updateUser(
         ID_card_number
         Phone_Number
         Note
+    }
+}
+`;
+
+export const REGISTER_USER_MUTATION = gql`
+
+mutation registerUser(
+    $username:String!,
+    $password:String!,
+    $comfirmpassword:String!,
+    $email:String!,
+){
+    registerUser(
+        username:$username,
+        password:$password,
+        comfirmpassword:$comfirmpassword,
+        email:$email,
+    ){
+        username
+        password
+        comfirmpassword
+        email
     }
 }
 

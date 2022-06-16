@@ -1,13 +1,13 @@
 
 import { useMutation, useQuery } from "@apollo/client";
 import { useState,useEffect } from "react";
-import { REMOVE_USER_MUTATION } from "../GraphQL/Mutation";
+import { REMOVE_STUDENT_MUTATION } from "../GraphQL/Mutation";
 import { LOAD_USERS } from "../GraphQL/Queries";
 import TableRows from "./TableRows"
 
 
 function AddDeleteTableRows(){
-    const [removeUser,{error}] = useMutation(REMOVE_USER_MUTATION)
+    const [removeStudent,{error}] = useMutation(REMOVE_STUDENT_MUTATION)
     const {loading,data} = useQuery(LOAD_USERS)
     const [rowsData, setRowsData] = useState([]);
     useEffect(()=>{
@@ -32,7 +32,7 @@ function AddDeleteTableRows(){
         const rows = [...rowsData];
         rows.splice(index, 1);
         setRowsData(rows);
-        removeUser({
+        removeStudent({
             variables:{
                 id:index+1
             }
