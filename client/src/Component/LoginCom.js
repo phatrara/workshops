@@ -6,34 +6,35 @@ import  './LoginCom.css'
 import PropTypes from 'prop-types';
 import { LOAD_USERS } from "../GraphQL/Queries";
 import { useQuery } from "@apollo/client";
+import {useNavigate} from 'react-router-dom'
 
-
-async function loginUser(credentails){
-    return fetch('http://localhost:6969/login',{
-        method:'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(credentails)
-    }).then(data => data.json())
-}
+// async function loginUser(credentails){
+//     return fetch('http://localhost:6969/login',{
+//         method:'POST',
+//         headers:{
+//             'Content-Type': 'application/json'
+//         },
+//         body:JSON.stringify(credentails)
+//     }).then(data => data.json())
+// }
 
 
 function LoginCom({setToken}) {
+    const navigate = useNavigate();
     const [username,setUsername] = useState('')
     const [password,setPassword] = useState('')
     
     // console.log(username,password);
-    const handlelogin = async e => {
-        // e.preventDefault();
-        const response = await loginUser({
-            username,
-            password
-        });
-        // if('userData' in response)
-        console.log(response);
-        setToken(response);
-    }
+    // const handlelogin = async e => {
+    //     // e.preventDefault();
+    //     const response = await loginUser({
+    //         username,
+    //         password
+    //     });
+    //     // if('userData' in response)
+    //     console.log(response);
+    //     setToken(response);
+    // }
 
 
     return(
@@ -44,7 +45,7 @@ function LoginCom({setToken}) {
                     <Image src={logo} preview={false}/>
                 </Col>
                 <Col span={18}>
-                    <Form name="loginform" onFinish={handlelogin} >
+                    <Form name="loginform"  >
                             <Form.Item label='Username' name='Username'  rules={[{required:true, message:'กรุณากรอก Username!'}]}>
                             <Input prefix={<UserOutlined/>}   placeholder="Username" onChange={(e)=>{setUsername(e.target.value)}}/>
                             </Form.Item>
@@ -62,7 +63,7 @@ function LoginCom({setToken}) {
         </>
     )
 }
-LoginCom.propTypes ={
-    setToken:PropTypes.func.isRequired
-}
+// LoginCom.propTypes ={
+//     setToken:PropTypes.func.isRequired
+// }
 export default LoginCom;

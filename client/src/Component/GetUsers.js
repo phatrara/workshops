@@ -46,6 +46,7 @@ const deleteTableRows=(index)=> {
           id:index
       }
   },).then(refetch)
+  
     },
     
   })

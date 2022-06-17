@@ -88,12 +88,25 @@ mutation registerUser(
         comfirmpassword:$comfirmpassword,
         email:$email,
     ){
-        username
-        password
-        comfirmpassword
-        email
+        token
     }
 }
 
+
+`;
+
+export const LOGIN_USER_MUTATION = gql`
+
+mutation loginUser(
+    $username:String!,
+    $password:String!,
+){
+    loginUser(
+      username: $username
+      password: $password
+    ) {
+      token
+    }
+  }
 
 `;
