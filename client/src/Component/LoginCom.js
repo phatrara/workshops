@@ -5,8 +5,10 @@ import logo from '../img/login.png'
 import  './LoginCom.css'
 import PropTypes from 'prop-types';
 import { LOAD_USERS } from "../GraphQL/Queries";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery,gql } from "@apollo/client";
 import {useNavigate} from 'react-router-dom'
+import { LOGIN_USER_MUTATION } from "../GraphQL/Mutation";
+import {AUTH_TOKEN} from './constants'
 
 // async function loginUser(credentails){
 //     return fetch('http://localhost:6969/login',{
@@ -23,7 +25,20 @@ function LoginCom({setToken}) {
     const navigate = useNavigate();
     const [username,setUsername] = useState('')
     const [password,setPassword] = useState('')
-    
+    const [formState, setFormState] = useState({
+        username: '',
+        password: '',
+      });
+    const logining = useMutation(LOGIN_USER_MUTATION,{
+        variables:{
+            username: formState.username,
+            password: formState.password
+        },
+        onCompleted:({logining})=>{
+            sessionStorage.setItem(AUTH_TOKEN,logining.token)
+            navigate('/')
+        }
+    })
     // console.log(username,password);
     // const handlelogin = async e => {
     //     // e.preventDefault();
@@ -45,12 +60,12 @@ function LoginCom({setToken}) {
                     <Image src={logo} preview={false}/>
                 </Col>
                 <Col span={18}>
-                    <Form name="loginform"  >
+                    <Form name="loginform" onFinish={{logining}} >
                             <Form.Item label='Username' name='Username'  rules={[{required:true, message:'กรุณากรอก Username!'}]}>
-                            <Input prefix={<UserOutlined/>}   placeholder="Username" onChange={(e)=>{setUsername(e.target.value)}}/>
+                            <Input prefix={<UserOutlined/>}   placeholder="Username" onChange={(e) =>setFormState({ ...formState, username: e.target.value})}/>
                             </Form.Item>
                             <Form.Item label='Password' name='Password' rules={[{required:true, message:'กรุณากรอก Password!'}]}>
-                            <Input prefix={<LockOutlined/>}  type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
+                            <Input prefix={<LockOutlined/>}  type="password" placeholder="Password" onChange={(e) =>setFormState({ ...formState, password: e.target.value})}/>
                             </Form.Item>
                             <div className='btn-pos'>
                             <Button type="primary" htmlType="submit">Apply</Button>

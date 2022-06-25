@@ -13,6 +13,9 @@ import  Register  from './Component/Register';
 import { useState } from 'react';
 import useToken from './Component/useToken';
 import { getKeyThenIncreaseKey } from 'antd/lib/message';
+import { AUTH_TOKEN } from './Component/constants';
+import { setContext } from '@apollo/client/link/context';
+
 
 const errorLink = onError(({ graphqlError, networkError})=>{
   if (graphqlError){
@@ -21,11 +24,21 @@ const errorLink = onError(({ graphqlError, networkError})=>{
     });
   }
 });
+const authLink = setContext((_,{login})=>{
+  const token = sessionStorage.getItem(AUTH_TOKEN);
+  return{
+    login:{
+      ...login,
+      authorization: token ? `Bearer ${token}` : ''
+    }
+  }
+})
 const link = from([
   errorLink,
   new HttpLink({uri:"http://localhost:6969/graphql"}),
 ])
 const client = new ApolloClient({
+  link: authLink.concat(HttpLink),
   link:link,
   cache: new InMemoryCache()
 });
@@ -55,6 +68,7 @@ function App() {
         sessionStorage.removeItem('token');
         window.location.href = "/"
       }
+
   return(
     <ApolloProvider client={client}>
       <BrowserRouter>
